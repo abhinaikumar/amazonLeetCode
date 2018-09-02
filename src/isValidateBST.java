@@ -35,7 +35,10 @@ public class isValidateBST {
         }
     }
     /*
-    recursive solution
+    recursive solution1：
+    O(n) time traversal all node
+    O(h) space back recursion function use implicit memory so its space is o(h) h is the depth of the tree
+    this approach is not a good idea because it uses long type to solve integer overflow.
      */
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
@@ -50,22 +53,55 @@ public class isValidateBST {
     }
 
     /*
+    recursion approach2:
+    do inorder traversal to solve this problem, we need a extra node as a prev node to record and compare
+     */
+    TreeNode prev=null;
+    public boolean isValidBST2(TreeNode root) {
+        return inorder(root);
+    }
+
+    private boolean inorder(TreeNode root){
+        if(root==null)
+            return true;
+
+        //inorder check left node first
+        if(!inorder(root.left)){
+            return false;
+        }
+        //current node should bigger than left node
+        if(prev!=null && prev.val>=root.val){
+            return false;
+        }
+        //set prev node to current node, inorder check node.right
+        prev=root;
+        root=root.right;
+        return inorder(root);
+    }
+
+
+
+
+    /*
     iterative method use inorder traversal
      */
 
-    public boolean isValidBST2(TreeNode root){
+    public boolean isValidBST3(TreeNode root){
         if(root==null)
             return true;
         TreeNode prev=null;
         Stack<TreeNode> stack = new Stack<>();
         while(root!=null || !stack.isEmpty()){
+            //push all left node into stack
             while(root!=null){
                 stack.push(root);
                 root=root.left;
             }
             root= stack.pop();
+            //pop leftmost node check is validate or not
             if(prev!=null && root.val<=prev.val)
                 return false;
+            //
             prev=root;
             root=root.right;
         }
