@@ -65,9 +65,6 @@ public class vertialOrderTraversal {
         for(int i=0; i<total; i++){
             res.add(i, new ArrayList<>());
         }
-
-        String s="sda";
-        s.compareTo()
         int shift=Math.abs(left);
         for(int i=t.size()-1;i>=0; i--){
             List<Pair> l=t.get(i);
