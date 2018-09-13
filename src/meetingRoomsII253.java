@@ -36,9 +36,14 @@ public class meetingRoomsII {
         Arrays.sort(starts);
         Arrays.sort(ends);
 
-        for(int i=1; i<intervals.length; i++){
-            if(starts[i]<ends[i-1])
+        int end=0;
+        for(int i=0; i<intervals.length; i++){
+            if(starts[i]<ends[end]){
                 room++;
+            }
+            else{
+                end++;
+            }
         }
         return room;
     }
